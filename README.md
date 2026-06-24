@@ -45,6 +45,6 @@ The script is safe to run more than once.
 ## Disclaimer
 
 These dotfiles are provided "as is", without warranty of any kind. The setup
-script modifies files in your home directory — use it at your own risk and
+script modifies files in your home directory, use it at your own risk and
 review it before running. I take no responsibility for any data loss or damage
 that may result from its use.
