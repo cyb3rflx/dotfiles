@@ -1,0 +1,44 @@
+#!/bin/bash
+set -euo pipefail
+
+
+# Setup from dotfiles and backup from the system dotfiles.
+
+
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR_BACKUP="${SCRIPT_DIR}/backup"
+BACKUP_MANIFEST="${SCRIPT_DIR_BACKUP}/backup_files.txt"
+files=(".bashrc" ".config/starship.toml")
+
+
+# Backup only when no backup was made
+mkdir -p "${SCRIPT_DIR_BACKUP}"
+touch "${BACKUP_MANIFEST}"
+for file in "${files[@]}"; do
+	grep -qxF "${file}" "${BACKUP_MANIFEST}" && continue
+	if [ -f "${HOME}/${file}" ] && [ ! -L "${HOME}/${file}" ]; then
+		if (cd "${HOME}" && cp --parents "${file}" "${SCRIPT_DIR_BACKUP}"); then
+                    	echo "${file}" >> "${BACKUP_MANIFEST}"
+                       	echo "${file} - make backup"
+              	fi
+	fi
+done
+
+
+
+# Setup starship and link files
+
+echo "=== Starting Setup ==="
+echo "Install Starship:"
+curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+
+echo "Create Links:"
+for file in "${files[@]}"; do
+	target="${HOME}/${file}"
+	mkdir -p "$(dirname "${target}")"
+	if ln -sf "${SCRIPT_DIR}/${file}" "${target}"; then
+		echo "${file} - created link"
+	fi
+done
+			

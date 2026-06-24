@@ -1,0 +1,35 @@
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$character"""
+add_newline = true
+
+[username]
+show_always = true
+format = "[$user]($style)"
+style_user = "bold cyan"
+
+[hostname]
+ssh_only = false
+format = "[@$hostname]($style):"
+style = "bold cyan"
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+format = "[$path]($style)"
+style = "bold purple"
+
+[git_branch]
+symbol = ""
+format = '[ \[](bright-black)[$branch](bold red)[\]](bright-black)'
+style = "bold purple"
+
+[character]
+success_symbol = '[ ❯](bold green)'
+error_symbol = '[ ❯](bold red)'
+
+[cmd_duration]
+disabled = true
