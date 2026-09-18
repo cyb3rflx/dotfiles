@@ -117,3 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 eval "$(starship init bash)"
+export PATH="$HOME/.local/bin:$PATH"
+source <(kubectl completion bash)
+alias k=kubectl
+complete -o default -F __start_kubectl k
